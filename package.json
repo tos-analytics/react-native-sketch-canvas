@@ -1,10 +1,10 @@
 {
-  "name": "@gigasz/react-native-sketch-canvas",
+  "name": "@labtorie-dev/react-native-sketch-canvas",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gigasz/react-native-sketch-canvas"
+    "url": "https://github.com/labtorie/react-native-sketch-canvas"
   },
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "react-native-sketch-canvas allows you to draw / sketch on both iOS and Android devices and sync the drawing data between users. Of course you can save as image.",
   "author": "Arthur Valle",
   "main": "index.js",

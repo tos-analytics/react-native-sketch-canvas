@@ -1,4 +1,4 @@
-package com.gigasz.rnsketchcanvas;
+package com.labtoriedev.rnsketchcanvas;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;

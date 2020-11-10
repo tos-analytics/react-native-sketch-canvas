@@ -1,4 +1,4 @@
-package com.gigasz.rnsketchcanvas;
+package com.labtoriedev.rnsketchcanvas;
 
 import android.graphics.Typeface;
 import android.graphics.Bitmap;
@@ -65,11 +65,11 @@ public class SketchCanvas extends View {
     public boolean openImageFile(String filename, String directory, String mode) {
         if(filename != null) {
             int res = mContext.getResources().getIdentifier(
-                filename.lastIndexOf('.') == -1 ? filename : filename.substring(0, filename.lastIndexOf('.')), 
-                "drawable", 
+                filename.lastIndexOf('.') == -1 ? filename : filename.substring(0, filename.lastIndexOf('.')),
+                "drawable",
                 mContext.getPackageName());
             BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-            Bitmap bitmap = res == 0 ? 
+            Bitmap bitmap = res == 0 ?
                 BitmapFactory.decodeFile(new File(filename, directory == null ? "" : directory).toString(), bitmapOptions) :
                 BitmapFactory.decodeResource(mContext.getResources(), res);
             if(bitmap != null) {
@@ -311,7 +311,7 @@ public class SketchCanvas extends View {
             mTranslucentDrawingBitmap = Bitmap.createBitmap(getWidth(), getHeight(),
                     Bitmap.Config.ARGB_8888);
             mTranslucentDrawingCanvas = new Canvas(mTranslucentDrawingBitmap);
-            
+
             for(CanvasText text: mArrCanvasText) {
                 PointF position = new PointF(text.position.x, text.position.y);
                 if (!text.isAbsoluteCoordinate) {
@@ -347,8 +347,8 @@ public class SketchCanvas extends View {
         if (mBackgroundImage != null) {
             Rect dstRect = new Rect();
             canvas.getClipBounds(dstRect);
-            canvas.drawBitmap(mBackgroundImage, null, 
-                Utility.fillImage(mBackgroundImage.getWidth(), mBackgroundImage.getHeight(), dstRect.width(), dstRect.height(), mContentMode), 
+            canvas.drawBitmap(mBackgroundImage, null,
+                Utility.fillImage(mBackgroundImage.getWidth(), mBackgroundImage.getHeight(), dstRect.width(), dstRect.height(), mContentMode),
                 null);
         }
 
@@ -384,14 +384,14 @@ public class SketchCanvas extends View {
     private Bitmap createImage(boolean transparent, boolean includeImage, boolean includeText, boolean cropToImageSize) {
         Bitmap bitmap = Bitmap.createBitmap(
             mBackgroundImage != null && cropToImageSize ? mOriginalWidth : getWidth(),
-            mBackgroundImage != null && cropToImageSize ? mOriginalHeight : getHeight(), 
+            mBackgroundImage != null && cropToImageSize ? mOriginalHeight : getHeight(),
             Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawARGB(transparent ? 0 : 255, 255, 255, 255);
 
         if (mBackgroundImage != null && includeImage) {
             Rect targetRect = new Rect();
-            Utility.fillImage(mBackgroundImage.getWidth(), mBackgroundImage.getHeight(), 
+            Utility.fillImage(mBackgroundImage.getWidth(), mBackgroundImage.getHeight(),
                 bitmap.getWidth(), bitmap.getHeight(), "AspectFit").roundOut(targetRect);
             canvas.drawBitmap(mBackgroundImage, null, targetRect, null);
         }
@@ -404,7 +404,7 @@ public class SketchCanvas extends View {
 
         if (mBackgroundImage != null && cropToImageSize) {
             Rect targetRect = new Rect();
-            Utility.fillImage(mDrawingBitmap.getWidth(), mDrawingBitmap.getHeight(), 
+            Utility.fillImage(mDrawingBitmap.getWidth(), mDrawingBitmap.getHeight(),
                 bitmap.getWidth(), bitmap.getHeight(), "AspectFill").roundOut(targetRect);
             canvas.drawBitmap(mDrawingBitmap, null, targetRect, mPaint);
         } else {

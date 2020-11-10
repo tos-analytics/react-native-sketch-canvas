@@ -52,6 +52,7 @@ class SketchCanvas extends React.Component {
 
     permissionDialogTitle: PropTypes.string,
     permissionDialogMessage: PropTypes.string,
+    autoAskPermission: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -72,6 +73,7 @@ class SketchCanvas extends React.Component {
 
     permissionDialogTitle: '',
     permissionDialogMessage: '',
+    autoAskPermission: false
   };
 
   state = {
@@ -168,7 +170,7 @@ class SketchCanvas extends React.Component {
           id: parseInt(Math.random() * 100000000), color: this.props.strokeColor,
           width: this.props.strokeWidth, data: []
         }
-        
+
         UIManager.dispatchViewManagerCommand(
           this._handle,
           UIManager.getViewManagerConfig('RNSketchCanvas').Commands.newPath,
@@ -218,6 +220,7 @@ class SketchCanvas extends React.Component {
   }
 
   async componentDidMount() {
+    if (!this.props.autoAskPermission) return;
     const isStoragePermissionAuthorized = await requestPermissions(
       this.props.permissionDialogTitle,
       this.props.permissionDialogMessage,
