@@ -39,6 +39,25 @@
     return self;
 }
 
+- (void)dealloc {
+    if (_frozenImage != NULL) {
+        CGImageRelease(_frozenImage);
+        _frozenImage = NULL;
+    }
+    if (_translucentFrozenImage != NULL) {
+        CGImageRelease(_translucentFrozenImage);
+        _translucentFrozenImage = NULL;
+    }
+    if (_drawingContext != NULL) {
+        CGContextRelease(_drawingContext);
+        _drawingContext = NULL;
+    }
+    if (_translucentDrawingContext != NULL) {
+        CGContextRelease(_translucentDrawingContext);
+        _translucentDrawingContext = NULL;
+    }
+}
+
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -91,8 +110,14 @@
 
     if (!CGSizeEqualToSize(self.bounds.size, _lastSize)) {
         _lastSize = self.bounds.size;
-        CGContextRelease(_drawingContext);
-        _drawingContext = nil;
+        if (_drawingContext != NULL) {
+            CGContextRelease(_drawingContext);
+            _drawingContext = NULL;
+        }
+        if (_translucentDrawingContext != NULL) {
+            CGContextRelease(_translucentDrawingContext);
+            _translucentDrawingContext = NULL;
+        }
         [self createDrawingContext];
         _needsFullRedraw = YES;
         _backgroundImageScaled = nil;
@@ -127,10 +152,14 @@
 }
 
 - (void)setFrozenImageNeedsUpdate {
-    CGImageRelease(_frozenImage);
-    CGImageRelease(_translucentFrozenImage);
-    _frozenImage = nil;
-    _translucentFrozenImage = nil;
+    if (_frozenImage != NULL) {
+        CGImageRelease(_frozenImage);
+        _frozenImage = NULL;
+    }
+    if (_translucentFrozenImage != NULL) {
+        CGImageRelease(_translucentFrozenImage);
+        _translucentFrozenImage = NULL;
+    }
 }
 
 - (BOOL)openSketchFile:(NSString *)filename directory:(NSString*) directory contentMode:(NSString*)mode {
